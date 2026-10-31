@@ -1,0 +1,24 @@
+Here are 10 tokenization algorithms to build from scratch, ordered from beginner baselines to the advanced algorithms that power today's Large Language Models (LLMs).
+Implementing this exact progression in your project tells a story: it shows hiring managers that you understand the historical evolution of NLP and exactly *why* modern subword algorithms were invented to solve the failures of earlier methods.
+## Beginner: The Baselines
+These are your starting points. They are fast to implement and set the baseline metrics (like compression ratio and vocabulary size) that your advanced algorithms will try to beat.
+1. **Character-Level Tokenizer:** The simplest approach. It breaks text into individual letters and symbols (`"cat"` → `["c", "a", "t"]`).
+* **Why build it:** It guarantees zero Out-Of-Vocabulary (OOV) errors, but you will quickly see its fatal flaw: it creates massive sequence lengths that overwhelm transformer context windows.
+2. **Whitespace Tokenizer:** A naive word-level tokenizer that simply calls `.split(' ')`.
+* **Why build it:** It shows the opposite extreme of character tokenization. It creates meaningful tokens but results in an infinitely large vocabulary size.
+3. **Regex / Punctuation-Aware Tokenizer:** An upgrade to the whitespace approach. It uses regular expressions to isolate punctuation so that `"hello!"` becomes `["hello", "!"]` instead of a single, highly specific token.
+## Intermediate: Structural & Statistical
+These algorithms introduce logic to handle edge cases and capture more context than single words or characters.
+4. **N-Gram Tokenizer:** Instead of single units, it groups characters or words into sliding windows of size *N* (e.g., bigrams or trigrams).
+* **Why build it:** It teaches you how models historically captured local context (like `"New York"`) before self-attention mechanisms existed.
+
+5. **Dictionary-Based (Maximum Matching):** An algorithm that relies on a predefined dictionary and greedily matches the longest possible sequence of characters.
+* **Why build it:** This is crucial for understanding how to tokenize languages that don't use spaces, such as Chinese or Japanese.
+6. **Naive Byte-Level Tokenizer:** Instead of mapping to Unicode characters, it converts raw text directly into 256 raw byte values.
+* **Why build it:** It forces you to handle text at the absolute lowest level of computer memory, ensuring you never encounter an unknown character or broken emoji.
+## Advanced: Modern Subword Algorithms
+These are the industry standards. They aim for the "Goldilocks zone": balancing a compact vocabulary with short sequence lengths.
+7. **Standard Byte-Pair Encoding (BPE):** Originally a data compression algorithm. It starts with a base vocabulary of characters and iteratively merges the most *frequently occurring* adjacent pairs in your training data until a target vocabulary size is reached.
+8. **Byte-Level BPE (BBPE):** The algorithm that powered GPT-2 and continues to power modern OpenAI models. It combines the 256-byte base vocabulary of Algorithm #6 with the merging logic of Algorithm #7, resulting in a robust tokenizer that can handle any language natively.
+9. **WordPiece:** Developed by Google for BERT. It looks similar to BPE, but instead of merging pairs based on raw frequency, it merges the pair that maximizes the *probability* (likelihood) of the training data.
+10. **Unigram Language Model:** Used by models like T5 and Llama/Gemma (often wrapped in the **SentencePiece** library). Instead of starting small and merging up, Unigram starts with a massive vocabulary and iteratively *removes* tokens that contribute the least to the overall loss. SentencePiece also treats spaces as just another character (often represented as `_`), making it entirely language-agnostic.
