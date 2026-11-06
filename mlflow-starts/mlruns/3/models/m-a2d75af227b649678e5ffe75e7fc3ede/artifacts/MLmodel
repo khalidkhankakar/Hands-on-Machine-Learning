@@ -1,0 +1,23 @@
+artifact_path: /home/itxkakar/Personal /Coding Playground/Hands-on-Machine-Learning/mlflow-starts/mlruns/3/models/m-a2d75af227b649678e5ffe75e7fc3ede/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.12.3
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.17.2
+model_id: m-a2d75af227b649678e5ffe75e7fc3ede
+model_size_bytes: 11768
+model_uuid: m-a2d75af227b649678e5ffe75e7fc3ede
+prompts: null
+run_id: fa0c0ee3787744ae8f6e0e497a77f2bc
+utc_time_created: '2026-11-06 04:04:49.556688'
